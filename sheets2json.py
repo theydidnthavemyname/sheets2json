@@ -55,7 +55,7 @@ class JsonHolder():
                 print('##############################################################################')
 
     def make_new_file(self, json_path): #== creates a default json file
-        with open('instructions.txt', 'w', encoding='utf-8') as file:
+        with open('README.txt', 'w', encoding='utf-8') as file:
             file.write(DEFAULT_TXT)
         with open(json_path, 'w', encoding='utf-8-sig') as file:
             file.write(DEFAULT_JSON)
