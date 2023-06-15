@@ -41,7 +41,8 @@ class JsonHolder():
             ):
         self.sheets_json = self.load_file(json_path)
     
-    def load_file(self, json_path): #== returns a json file as a dict
+    def load_file(self, json_path): 
+    #== returns a json file as a dict
         if not ospath.exists(json_path):
             self.make_new_file(json_path)
         with open(json_path, 'r', encoding='utf-8-sig') as file:
@@ -54,16 +55,19 @@ class JsonHolder():
                 print('Try fixing its syntax or just deleting it and let a default one get generated.')
                 print('##############################################################################')
 
-    def make_new_file(self, json_path): #== creates a default json file
+    def make_new_file(self, json_path): 
+    #== creates a default json file
         with open('README.txt', 'w', encoding='utf-8') as file:
             file.write(DEFAULT_TXT)
         with open(json_path, 'w', encoding='utf-8-sig') as file:
             file.write(DEFAULT_JSON)
     
-    def get_output_path(self): #== returns self.sheets_json
+    def get_output_path(self): 
+    #== returns self.sheets_json
         return self.sheets_json['output_path']
     
-    def get_sheets(self): #== returns self.sheets_json
+    def get_sheets(self):
+    #== returns self.sheets_json
         sheets = {
                 key:value for key, value 
                 in self.sheets_json['sheets'].items() 
@@ -87,7 +91,8 @@ class Sheet():
         self.output_path = output_path
         self.csv_url = csv_url
     
-    def load_csv(self): #== loads csv from url and returns a dict
+    def load_csv(self): 
+    #== loads csv from url and returns a dict
         csv_file = requests.get(self.csv_url)
         csv_path = self.output_path + self.name + '.csv'
         with open(csv_path, 'w', newline='', encoding='ISO-8859-1') as file:
@@ -101,12 +106,14 @@ class Sheet():
         os.remove(csv_path)
         return csv_dict
     
-    def get_json(self): #== returns a string of json syntax created from a dict
+    def get_json(self): 
+    #== returns a string of json syntax created from a dict
         dict = self.load_csv()
         json_str = json.dumps(dict, ensure_ascii=False)
         return json_str
     
-    def save_json(self): #== saves json file of sheet
+    def save_json(self): 
+    #== saves json file of sheet
         json_path = self.output_path + self.name + '.json'
         json_str = self.get_json()
         with open(json_path, 'w', encoding='utf-8-sig') as file:
@@ -123,7 +130,8 @@ class SheetsHandler():
         self.output_path = sheets_json.get_output_path()
         self.sheets = sheets_json.get_sheets()
     
-    def save_sheets(self): #== saves all sheets in sheets.json as json files
+    def save_sheets(self): 
+    #== saves all sheets in sheets.json as json files
         if self.sheets == {}: return
         if not ospath.exists(self.output_path): os.makedirs(self.output_path)
         for name, url in self.sheets.items():
